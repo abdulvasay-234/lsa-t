@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mario Timer</title>
+  <style>
+    body {
+      font-family: 'Press Start 2P', cursive;
+      background: url('https://i.imgur.com/IGwKqBG.png') repeat-x;
+      background-size: cover;
+      color: white;
+      text-align: center;
+      margin: 0;
+    padding: 0;
+    background-color: #fdbc3d;
+      overflow: hidden;
+    }
+
+    .timer-container {
+      position: relative;
+      top: 20vh;
+    }
+
+    h1 {
+      font-size: 3rem;
+      text-shadow: 2px 2px 4px black;
+    }
+
+    #timer {
+      font-size: 5rem;
+      color: red;
+      text-shadow: 3px 3px 6px black;
+      margin-top: 20px;
+    }
+
+    /* Start button */
+    #start-btn {
+      margin-top: 30px;
+      font-size: 1.2rem;
+      background: #e60012;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: 'Press Start 2P', cursive;
+      box-shadow: 3px 3px 6px black;
+    }
+    #start-btn:hover {
+      background: #ff4c4c;
+    }
+
+    /* Mario running */
+    .mario {
+      width: 80px;
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      animation: run 20s linear infinite;
+      display: none;
+    }
+
+    @keyframes run {
+      from { left: -100px; }
+      to { left: 100%; }
+    }
+
+
+
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="timer-container">
+    <h1>Hack-a-Mini</h1>
+    <h3 style="color: #001f4d;">Presented by Lords Skill Academy</h3>
+    <div id="timer">06:00:00</div>
+    <button id="start-btn">▶ Start Timer</button>
+  </div>
+
+  <!-- Mario running -->
+  <img src="mario.png" class="mario" id="mario">
+
+  <script>
+    // 🎵 Array of Mario music URLs
+    const musicTracks = [
+      "https://archive.org/download/SuperMarioBrosThemeSong/smb_theme.mp3",
+      "https://archive.org/download/SuperMarioBrosUndergroundTheme/SMB_Underground.mp3",
+      "https://archive.org/download/SuperMarioBrosStarmanTheme/smb_starman.mp3",
+      "https://archive.org/download/SuperMarioBrosUnderwaterTheme/SMB_Underwater.mp3",
+      "https://archive.org/download/SuperMarioBrosCastleTheme/smb_castle.mp3"
+    ];
+
+    const timerEl = document.getElementById("timer");
+    const marioEl = document.getElementById("mario");
+    const startBtn = document.getElementById("start-btn");
+
+    let timeLeft = 6 * 60 * 60;
+    let timerInterval;
+    let music;
+    let coinInterval;
+
+    function updateTimer() {
+      let hours = Math.floor(timeLeft / 3600);
+      let minutes = Math.floor((timeLeft % 3600) / 60);
+      let seconds = timeLeft % 60;
+
+      timerEl.textContent =
+        String(hours).padStart(2, '0') + ":" +
+        String(minutes).padStart(2, '0') + ":" +
+        String(seconds).padStart(2, '0');
+
+      if (timeLeft > 0) {
+        timeLeft--;
+      } else {
+        clearInterval(timerInterval);
+        clearInterval(coinInterval);
+        if (music) music.pause();
+        new Audio("https://archive.org/download/SuperMarioBrosLevelComplete/smb_level_complete.mp3").play();
+        alert("⏰ Time’s up! Mario wins!");
+      }
+    }
+
+    // 🎮 Spawn coin
+    function spawnCoin() {
+      const coin = document.createElement("img");
+      coin.src = "https://i.imgur.com/1Xc4ZcB.gif"; // coin gif
+      coin.classList.add("coin");
+      coin.style.left = Math.random() * 90 + "vw"; // random horizontal position
+      document.body.appendChild(coin);
+
+      // Play coin sound
+      new Audio("https://archive.org/download/SuperMarioCoinSoundEffect/smb_coin.mp3").play();
+
+      // Remove coin after animation
+      setTimeout(() => {
+        coin.remove();
+      }, 4000);
+    }
+
+    startBtn.addEventListener("click", () => {
+      // Pick random track
+      const chosenTrack = musicTracks[Math.floor(Math.random() * musicTracks.length)];
+      music = new Audio(chosenTrack);
+      music.loop = true;
+      music.volume = 0.4;
+      music.play();
+
+      // Start timer
+      timerInterval = setInterval(updateTimer, 1000);
+      updateTimer();
+
+      // Show Mario sprite
+      marioEl.style.display = "block";
+
+      // Hide start button
+      startBtn.style.display = "none";
+
+      // Spawn coins every 30s
+      coinInterval = setInterval(spawnCoin, 30000);
+    });
+  </script>
+</body>
+</html>
