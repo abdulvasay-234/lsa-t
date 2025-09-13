@@ -16,16 +16,24 @@
       overflow-x: hidden;
     }
 
+    /* Centering container vertically and horizontally */
     .timer-container {
-      position: relative;
-      top: 10vh;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       width: 90%;
-      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
     h1 {
       font-size: 2.2rem;
       text-shadow: 2px 2px 4px black;
+      margin-top: 0;
+      margin-bottom: 18px;
     }
 
     #timer {
@@ -33,6 +41,7 @@
       color: red;
       text-shadow: 3px 3px 6px black;
       margin-top: 20px;
+      margin-bottom: 26px;
     }
 
     #start-btn {
@@ -46,6 +55,7 @@
       cursor: pointer;
       font-family: 'Press Start 2P', cursive;
       box-shadow: 3px 3px 6px black;
+      margin-bottom: 18px;
     }
     #start-btn:hover {
       background: #ff4c4c;
@@ -92,7 +102,6 @@
     /* ----------- Responsive Styles ----------- */
     @media (max-width: 600px) {
       .timer-container {
-        top: 4vh;
         width: 98%;
       }
       h1 {
@@ -126,7 +135,7 @@
   <img src="logo.png" alt="Logo" class="logo">
   <div class="timer-container">
     <h1>Hack-a-Mini</h1>
-    <h3 style="color: #212121;">Presented by Lords Skill Academy</h3>
+    <h3 style="color: #212121; margin-top: 0; margin-bottom: 18px;">Presented by Lords Skill Academy</h3>
     <div id="timer">06:00:00</div>
     <button id="start-btn">▶ Start Timer</button>
   </div>
@@ -213,4 +222,3 @@
   </script>
 </body>
 </html>
-
