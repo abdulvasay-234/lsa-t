@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Hack-a-Mini</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: 'Press Start 2P', cursive;
@@ -10,36 +11,37 @@
       color: white;
       text-align: center;
       margin: 0;
-    padding: 0;
-    background-color: #fdbc3d;
-      overflow: hidden;
+      padding: 0;
+      background-color: #fdbc3d;
+      overflow-x: hidden;
     }
 
     .timer-container {
       position: relative;
-      top: 20vh;
+      top: 10vh;
+      width: 90%;
+      margin: 0 auto;
     }
 
     h1 {
-      font-size: 3rem;
+      font-size: 2.2rem;
       text-shadow: 2px 2px 4px black;
     }
 
     #timer {
-      font-size: 5rem;
+      font-size: 3rem;
       color: red;
       text-shadow: 3px 3px 6px black;
       margin-top: 20px;
     }
 
-    /* Start button */
     #start-btn {
       margin-top: 30px;
-      font-size: 1.2rem;
+      font-size: 1rem;
       background: #e60012;
       color: white;
       border: none;
-      padding: 15px 30px;
+      padding: 12px 20px;
       border-radius: 12px;
       cursor: pointer;
       font-family: 'Press Start 2P', cursive;
@@ -49,9 +51,8 @@
       background: #ff4c4c;
     }
 
-    /* Mario running */
     .mario {
-      width: 80px;
+      width: 60px;
       position: absolute;
       bottom: 20px;
       left: 0;
@@ -64,8 +65,27 @@
       to { left: 100%; }
     }
 
-
-
+    /* ----------- Responsive Styles ----------- */
+    @media (max-width: 600px) {
+      .timer-container {
+        top: 4vh;
+        width: 98%;
+      }
+      h1 {
+        font-size: 1.3rem;
+      }
+      #timer {
+        font-size: 2rem;
+      }
+      #start-btn {
+        font-size: 0.8rem;
+        padding: 10px 14px;
+      }
+      .mario {
+        width: 42px;
+        bottom: 10px;
+      }
+    }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
@@ -118,9 +138,9 @@
 
     // 🎮 Spawn coin
     function spawnCoin() {
-
+      const coin = document.createElement("div");
       coin.classList.add("coin");
-      coin.style.left = Math.random() * 90 + "vw"; // random horizontal position
+      coin.style.left = Math.random() * 90 + "vw";
       document.body.appendChild(coin);
 
       // Play coin sound
@@ -156,7 +176,3 @@
   </script>
 </body>
 </html>
-
-
-
-
