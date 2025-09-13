@@ -65,6 +65,30 @@
       to { left: 100%; }
     }
 
+    .logo {
+      position: absolute;
+      left: 20px;
+      top: 0px;
+      width: 300px;
+      height: auto;
+      z-index: 10;
+    }
+
+    /* Coin styling */
+    .coin {
+      position: fixed;
+      top: 20vh;
+      width: 40px;
+      height: 40px;
+      background: url('coin.png') no-repeat center/contain;
+      z-index: 20;
+      animation: coin-float 4s linear;
+    }
+    @keyframes coin-float {
+      from { opacity: 1; top: 20vh;}
+      to { opacity: 0; top: 5vh;}
+    }
+
     /* ----------- Responsive Styles ----------- */
     @media (max-width: 600px) {
       .timer-container {
@@ -85,20 +109,30 @@
         width: 42px;
         bottom: 10px;
       }
+      .logo {
+        width: 160px;
+        left: 5px;
+        top: 0px;
+      }
+      .coin {
+        width: 24px;
+        height: 24px;
+      }
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
+  <img src="logo.png" alt="Logo" class="logo">
   <div class="timer-container">
     <h1>Hack-a-Mini</h1>
-    <h3 style="color: #001f4d;">Presented by Lords Skill Academy</h3>
+    <h3 style="color: #212121;">Presented by Lords Skill Academy</h3>
     <div id="timer">06:00:00</div>
     <button id="start-btn">▶ Start Timer</button>
   </div>
 
   <!-- Mario running -->
-  <img src="mario.png" class="mario" id="mario">
+  <img src="mario.png" class="mario" id="mario" alt="Mario running">
 
   <script>
     // 🎵 Array of Mario music URLs
@@ -136,20 +170,6 @@
       }
     }
 
-    //Logo
-    <style>
-    .logo {
-        position: absolute;
-        top: 0px;
-        left: 20px;
-        width: 300px;
-        top: -70px;
-        height: auto;
-        z-index: 10;
-    }
-</style>
-<img src="logo.png" alt="Logo" class="logo">
-
     // 🎮 Spawn coin
     function spawnCoin() {
       const coin = document.createElement("div");
@@ -167,6 +187,9 @@
     }
 
     startBtn.addEventListener("click", () => {
+      // Prevent multiple starts
+      if (timerInterval) return;
+
       // Pick random track
       const chosenTrack = musicTracks[Math.floor(Math.random() * musicTracks.length)];
       music = new Audio(chosenTrack);
@@ -190,4 +213,3 @@
   </script>
 </body>
 </html>
-
